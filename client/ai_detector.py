@@ -2,9 +2,13 @@ from ultralytics import YOLO
 import cv2
 import numpy as np
 import random
+import os
 
 class DefectDetector:
     def __init__(self, model_path='best.pt'):
+        # Resolve relative path from this file's directory to avoid CWD issues
+        if not os.path.isabs(model_path):
+            model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), model_path))
         print(f"[AI] 正在加载 YOLO 模型: {model_path} ...")
         try:
             self.model = YOLO(model_path)
