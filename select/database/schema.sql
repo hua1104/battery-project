@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS battery_sys DEFAULT CHARSET utf8mb4;
+USE battery_sys;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(64) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(20) DEFAULT 'operator'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS detection_records (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  detection_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  operator VARCHAR(64) DEFAULT '',
+  result VARCHAR(128) DEFAULT '',
+  image_path VARCHAR(255) DEFAULT '',
+  confidence FLOAT DEFAULT 0.95,
+  is_reviewed TINYINT DEFAULT 0,
+  INDEX idx_detection_time (detection_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
